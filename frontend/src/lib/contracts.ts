@@ -1,4 +1,8 @@
-// Contains ABI and address map for smart contracts.
+import ZetaPolicy from "../../../../artifacts/contracts/ZetaPolicy.sol/ZetaPolicy.json";
+import ZetaAgents from "../../../../artifacts/contracts/ZetaAgents.sol/ZetaAgents.json";
+import ZetaOrderBook from "../../../../artifacts/contracts/ZetaOrderBook.sol/ZetaOrderBook.json";
+import ZetaVault from "../../../../artifacts/contracts/ZetaVault.sol/ZetaVault.json";
+import ZetaDisputes from "../../../../artifacts/contracts/ZetaDisputes.sol/ZetaDisputes.json";
 
 export const contractAddresses = {
   policy: import.meta.env.VITE_CONTRACT_POLICY,
@@ -8,6 +12,8 @@ export const contractAddresses = {
   disputes: import.meta.env.VITE_CONTRACT_DISPUTES,
 };
 
-// In a real application, you would also export the ABIs here,
-// likely imported from your Hardhat artifacts.
-// export const zetaOrderBookAbi = [...]
+export const zetaPolicyAbi = ZetaPolicy.abi;
+export const zetaAgentsAbi = ZetaAgents.abi;
+export const zetaOrderBookAbi = ZetaOrderBook.abi;
+export const zetaVaultAbi = ZetaVault.abi;
+export const zetaDisputesAbi = ZetaDisputes.abi;

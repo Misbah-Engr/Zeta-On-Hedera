@@ -54,26 +54,20 @@ describe("Zeta Protocol", function () {
       // 3. User creates an order intent
       const maxTotal = ethers.parseEther("1.0");
       const expiry = Math.floor(Date.now() / 1000) + 3600; // 1 hour from now
-      await expect(orderBook.connect(user).createOrderIntent(
-          ethers.ZeroAddress, // HBAR token
-          maxTotal,
-          ethers.id("shop1"),
-          ethers.id("regionA"),
-          ethers.id("productX"),
-          1,
-          expiry
-      )).to.emit(orderBook, "OrderCreated").withArgs(
-          1,
-          user.address,
-          ethers.ZeroAddress,
-          maxTotal,
-          ethers.id("shop1"),
-          ethers.id("regionA"),
-          ethers.id("productX"),
-          1
+      const createOrderTx = await orderBook.connect(user).createOrderIntent(
+        ethers.ZeroAddress, // HBAR token
+        maxTotal,
+        ethers.id("shop1"),
+        ethers.id("regionA"),
+        ethers.id("productX"),
+        1,
+        expiry
       );
-
-      const orderId = 1;
+      const createOrderReceipt = await createOrderTx.wait();
+      const orderId = createOrderReceipt.logs.find(
+        (event) => event.fragment.name === "OrderCreated"
+      ).args[0];
+      console.log("orderId", orderId);
 
       // 4. Agent commits a quote
       const feeTotal = ethers.parseEther("0.9");

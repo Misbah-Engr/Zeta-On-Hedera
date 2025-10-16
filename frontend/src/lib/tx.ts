@@ -187,7 +187,7 @@ export const bondDeposit = async (amount: number) => {
     .setContractId(contractId)
     .setGas(100000)
     .setPayableAmount(new Hbar(amount))
-    .setFunction("depositBond", new ContractFunctionParameters())
+    .setFunction("bondDeposit", new ContractFunctionParameters())
     .freezeWithSigner(signer);
   await tx.executeWithSigner(signer);
 };
@@ -198,7 +198,7 @@ export const bondWithdraw = async (amount: number) => {
   const tx = await new ContractExecuteTransaction()
     .setContractId(contractId)
     .setGas(100000)
-    .setFunction("withdrawBond", new ContractFunctionParameters().addUint256(amount))
+    .setFunction("bondWithdraw", new ContractFunctionParameters().addUint256(amount))
     .freezeWithSigner(signer);
   await tx.executeWithSigner(signer);
 };

@@ -9,17 +9,19 @@ import * as tx from '../lib/tx';
 import { hashData } from '../lib/blake';
 import { client, GET_ORDER_DETAILS_QUERY } from '../lib/gql';
 import { useWalletStore } from '../state/wallet.store';
+import { Order } from '../../types/order';
+import { formatDate } from '../lib/format';
 
 const OrderDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { account } = useWalletStore();
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ['order', id],
     queryFn: async () => client.request(GET_ORDER_DETAILS_QUERY, { orderId: id }),
     enabled: !!id,
   });
 
-  const order = data?.order;
+  const order: Order | undefined = data?.order;
   const [pod, setPod] = useState({ otp: '', qr: '', waybill: '', photo: '' });
 
   const handlePodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,6 +56,10 @@ const OrderDetails: React.FC = () => {
     return <Skeleton />;
   }
 
+  if (error) {
+    return <p className="text-error">Error fetching order details.</p>;
+  }
+
   if (!order) {
     return <p>Order not found.</p>;
   }
@@ -69,7 +75,7 @@ const OrderDetails: React.FC = () => {
           <KeyValue label="Order ID" value={order.id} isMono />
           <KeyValue label="Status" value={order.status} />
           <KeyValue label="User" value={order.user} isMono />
-          <KeyValue label="Agent" value={order.agent} isMono />
+          <KeyValue label="Agent" value={order.agent || '-'} isMono />
           <KeyValue label="Token" value={order.token} />
           <KeyValue label="Quantity" value={order.qty} />
           <KeyValue label="Max Total" value={order.maxTotal} />
@@ -102,9 +108,9 @@ const OrderDetails: React.FC = () => {
       {order.status === 'Completed' && (
         <Panel>
           <h2 className="text-xl font-bold mb-4">Completed</h2>
-          <KeyValue label="Paid to Treasury" value="..." />
-          <KeyValue label="Paid to Agent" value="..." />
-          <KeyValue label="Holdback Released At" value="..." />
+          <KeyValue label="Paid to Treasury" value={order.selectedFee * (order.treasuryBps / 10000)} />
+          <KeyValue label="Paid to Agent" value={order.selectedFee - (order.selectedFee * (order.treasuryBps / 10000)) - (order.selectedFee * (order.holdbackBps / 10000))} />
+          <KeyValue label="Holdback Released At" value={formatDate(order.updatedAt)} />
           <ButtonPrimary onClick={() => tx.openClaim(order.id, [], [])}>Open Dispute</ButtonPrimary>
         </Panel>
       )}

@@ -6,11 +6,13 @@ import Skeleton from '../components/Skeleton';
 import { client, GET_ORDERS_QUERY } from '../lib/gql';
 import { useWalletStore } from '../state/wallet.store';
 import { useNavigate } from 'react-router-dom';
+import { Order } from '../../types/order';
+import { formatDate } from '../lib/format';
 
 const HomeOrders: React.FC = () => {
   const navigate = useNavigate();
   const { account } = useWalletStore();
-  const { data, isLoading } = useQuery({
+  const { data, isLoading, error } = useQuery({
     queryKey: ['orders', account],
     queryFn: async () => client.request(GET_ORDERS_QUERY, { userAddress: account }),
     enabled: !!account,
@@ -32,10 +34,11 @@ const HomeOrders: React.FC = () => {
         </div>
         <div>
           {isLoading && <Skeleton />}
-          {!isLoading && (!data || !data.orders || data.orders.length === 0) && (
+          {error && <p className="text-error">Error fetching orders.</p>}
+          {!isLoading && !error && (!data || !data.orders || data.orders.length === 0) && (
             <p className="text-text-dim">You have no orders.</p>
           )}
-          {!isLoading && data && data.orders && data.orders.length > 0 && (
+          {!isLoading && !error && data && data.orders && data.orders.length > 0 && (
             <table className="w-full text-left">
               <thead>
                 <tr>
@@ -47,13 +50,13 @@ const HomeOrders: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {data.orders.map((order: any) => (
+                {data.orders.map((order: Order) => (
                   <tr key={order.id} onClick={() => handleRowClick(order.id)} className="cursor-pointer hover:bg-line">
                     <td className="p-2 font-mono">{order.id}</td>
                     <td className="p-2">{order.status}</td>
                     <td className="p-2">{order.maxTotal}</td>
                     <td className="p-2">{order.selectedAgent || '-'}</td>
-                    <td className="p-2">{new Date(order.updatedAt).toLocaleDateString()}</td>
+                    <td className="p-2">{formatDate(order.updatedAt)}</td>
                   </tr>
                 ))}
               </tbody>
