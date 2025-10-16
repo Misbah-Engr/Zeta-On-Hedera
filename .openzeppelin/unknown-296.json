@@ -1,0 +1,1380 @@
+{
+  "manifestVersion": "3.2",
+  "proxies": [
+    {
+      "address": "0x8Cd56e96BA5b04e6960B2257C937E175B91AA31c",
+      "txHash": "0x8137a1f05ec215b5b7ae505295e952a46a8b7e5d247b3900d80e801e3aa47715",
+      "kind": "uups"
+    },
+    {
+      "address": "0xD75e3FBb2C092181110eE23a4763D701EA61c294",
+      "txHash": "0xe894175800ece3b5bd61acc582b5300a4c14990b26d897db2238736174adfa36",
+      "kind": "uups"
+    },
+    {
+      "address": "0x3C3216bCDEe8b85cA82222Ed251A7bd765569b4E",
+      "txHash": "0x365452062a81b7e5c03f99485855230ed27631d2bcb32591adf39ea3742ef43b",
+      "kind": "uups"
+    },
+    {
+      "address": "0x58b8661801C2AAe8E9E7A5028acc30fad19C23d0",
+      "txHash": "0x1741ee0f3d1292722ee637ea1e0741fbeb49348c8e216501ef55688da3a48ad3",
+      "kind": "uups"
+    },
+    {
+      "address": "0xfC01208ffF34C3987431d15fEEE23444F11A8317",
+      "txHash": "0x9d1964ce53ef8cf286bb70928c4a1100bf8fa89c80ec3d9811b9067ecbddff7e",
+      "kind": "uups"
+    },
+    {
+      "address": "0xF4C82979Bd5ABB60C497dfeCEa46fEfAC8bd9b91",
+      "txHash": "0xcb483a1fe5e6b879982ccb206e78fb4e3be927876e99a428212c888178aeba0c",
+      "kind": "uups"
+    },
+    {
+      "address": "0x9DE3DCfc3810D9a8eeb7d219B3c33BfcDf7EfBf1",
+      "txHash": "0x15d07ab18cdf3ccac4636ee3cebd4a5e7841d31fedc220afe9b2ac5b850a6040",
+      "kind": "uups"
+    }
+  ],
+  "impls": {
+    "e830333b4c76ef9be111ee2effc67efcd7403cee629f1332320f452676a7bd2c": {
+      "address": "0x23319d59e36C4463967b0aD4be5F5b99403D6f97",
+      "txHash": "0xf1f66ab977ba2ee1210c26022637a23c95d75528f60f9155b12bab7cde278326",
+      "layout": {
+        "solcVersion": "0.8.24",
+        "storage": [
+          {
+            "label": "treasury",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_address",
+            "contract": "ZetaPolicy",
+            "src": "contracts/ZetaPolicy.sol:13"
+          },
+          {
+            "label": "allowedToken",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_address",
+            "contract": "ZetaPolicy",
+            "src": "contracts/ZetaPolicy.sol:14"
+          },
+          {
+            "label": "treasuryBps",
+            "offset": 20,
+            "slot": "1",
+            "type": "t_uint16",
+            "contract": "ZetaPolicy",
+            "src": "contracts/ZetaPolicy.sol:15"
+          },
+          {
+            "label": "defaultHoldbackBps",
+            "offset": 22,
+            "slot": "1",
+            "type": "t_uint16",
+            "contract": "ZetaPolicy",
+            "src": "contracts/ZetaPolicy.sol:16"
+          },
+          {
+            "label": "defaultMicrobondBps",
+            "offset": 24,
+            "slot": "1",
+            "type": "t_uint16",
+            "contract": "ZetaPolicy",
+            "src": "contracts/ZetaPolicy.sol:17"
+          },
+          {
+            "label": "claimWindowSec",
+            "offset": 26,
+            "slot": "1",
+            "type": "t_uint32",
+            "contract": "ZetaPolicy",
+            "src": "contracts/ZetaPolicy.sol:18"
+          },
+          {
+            "label": "acceptAckWindowSec",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_uint32",
+            "contract": "ZetaPolicy",
+            "src": "contracts/ZetaPolicy.sol:19"
+          },
+          {
+            "label": "userBanned",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "ZetaPolicy",
+            "src": "contracts/ZetaPolicy.sol:22"
+          },
+          {
+            "label": "agentBanned",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "ZetaPolicy",
+            "src": "contracts/ZetaPolicy.sol:23"
+          },
+          {
+            "label": "zetaAgents",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_address",
+            "contract": "ZetaPolicy",
+            "src": "contracts/ZetaPolicy.sol:26"
+          },
+          {
+            "label": "zetaOrderBook",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_address",
+            "contract": "ZetaPolicy",
+            "src": "contracts/ZetaPolicy.sol:27"
+          },
+          {
+            "label": "zetaVault",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_address",
+            "contract": "ZetaPolicy",
+            "src": "contracts/ZetaPolicy.sol:28"
+          },
+          {
+            "label": "zetaDisputes",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_address",
+            "contract": "ZetaPolicy",
+            "src": "contracts/ZetaPolicy.sol:29"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)26_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(AccessControlStorage)36_storage": {
+            "label": "struct AccessControlUpgradeable.AccessControlStorage",
+            "members": [
+              {
+                "label": "_roles",
+                "type": "t_mapping(t_bytes32,t_struct(RoleData)26_storage)",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(InitializableStorage)147_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(PausableStorage)298_storage": {
+            "label": "struct PausableUpgradeable.PausableStorage",
+            "members": [
+              {
+                "label": "_paused",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(RoleData)26_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "hasRole",
+                "type": "t_mapping(t_address,t_bool)",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_uint16": {
+            "label": "uint16",
+            "numberOfBytes": "2"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.Pausable": [
+            {
+              "contract": "PausableUpgradeable",
+              "label": "_paused",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.AccessControl": [
+            {
+              "contract": "AccessControlUpgradeable",
+              "label": "_roles",
+              "type": "t_mapping(t_bytes32,t_struct(RoleData)26_storage)",
+              "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:62",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    },
+    "f542b0a024a0e7b3917b914685004fbb55738844e46c1cb50594b4c89c6c2e53": {
+      "address": "0xc17b3Cb4C1988867A342EF02c2C41Fe32287693D",
+      "txHash": "0xbc1def42b14a0b669f9615f732651120c4c60e47fce5fad28f75d737ae327c08",
+      "layout": {
+        "solcVersion": "0.8.24",
+        "storage": [
+          {
+            "label": "policy",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_contract(IZetaPolicyV2)4709",
+            "contract": "ZetaVault",
+            "src": "contracts/ZetaVault.sol:24"
+          },
+          {
+            "label": "agents",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_contract(IZetaAgentsV)4717",
+            "contract": "ZetaVault",
+            "src": "contracts/ZetaVault.sol:25"
+          },
+          {
+            "label": "orderLocks",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_uint256,t_struct(Locks)4752_storage)",
+            "contract": "ZetaVault",
+            "src": "contracts/ZetaVault.sol:39"
+          },
+          {
+            "label": "standingBond",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "ZetaVault",
+            "src": "contracts/ZetaVault.sol:40"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)26_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(AccessControlStorage)36_storage": {
+            "label": "struct AccessControlUpgradeable.AccessControlStorage",
+            "members": [
+              {
+                "label": "_roles",
+                "type": "t_mapping(t_bytes32,t_struct(RoleData)26_storage)",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(InitializableStorage)147_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(ReentrancyGuardStorage)362_storage": {
+            "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
+            "members": [
+              {
+                "label": "_status",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(RoleData)26_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "hasRole",
+                "type": "t_mapping(t_address,t_bool)",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_contract(IZetaAgentsV)4717": {
+            "label": "contract IZetaAgentsV",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IZetaPolicyV2)4709": {
+            "label": "contract IZetaPolicyV2",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(Locks)4752_storage)": {
+            "label": "mapping(uint256 => struct ZetaVault.Locks)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Locks)4752_storage": {
+            "label": "struct ZetaVault.Locks",
+            "members": [
+              {
+                "label": "userLock",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "user",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "holdback",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "agentDue",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "microbond",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "treasuryAmount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "agent",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "lockedAt",
+                "type": "t_uint64",
+                "offset": 20,
+                "slot": "6"
+              },
+              {
+                "label": "paidMain",
+                "type": "t_bool",
+                "offset": 28,
+                "slot": "6"
+              },
+              {
+                "label": "holdReleased",
+                "type": "t_bool",
+                "offset": 29,
+                "slot": "6"
+              }
+            ],
+            "numberOfBytes": "224"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.ReentrancyGuard": [
+            {
+              "contract": "ReentrancyGuardUpgradeable",
+              "label": "_status",
+              "type": "t_uint256",
+              "src": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:43",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.AccessControl": [
+            {
+              "contract": "AccessControlUpgradeable",
+              "label": "_roles",
+              "type": "t_mapping(t_bytes32,t_struct(RoleData)26_storage)",
+              "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:62",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    },
+    "f7202678bde296c86db446fd6fab5c43e9cd5bc51cbdcf11ac2f23ad8e91350e": {
+      "address": "0xBb3e9Ed8b4F74443735a0aB9EC59d144DF9F6CAa",
+      "txHash": "0x2ed7a65d5fe08b479e7b8adb07c793d63aa14379aacdc9f89d59f2b5826d5ed9",
+      "layout": {
+        "solcVersion": "0.8.24",
+        "storage": [
+          {
+            "label": "agents",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_mapping(t_address,t_struct(Agent)2701_storage)",
+            "contract": "ZetaAgents",
+            "src": "contracts/ZetaAgents.sol:22"
+          },
+          {
+            "label": "vault",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_contract(IZetaVault)2685",
+            "contract": "ZetaAgents",
+            "src": "contracts/ZetaAgents.sol:23"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)26_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(AccessControlStorage)36_storage": {
+            "label": "struct AccessControlUpgradeable.AccessControlStorage",
+            "members": [
+              {
+                "label": "_roles",
+                "type": "t_mapping(t_bytes32,t_struct(RoleData)26_storage)",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(InitializableStorage)147_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(ReentrancyGuardStorage)362_storage": {
+            "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
+            "members": [
+              {
+                "label": "_status",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(RoleData)26_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "hasRole",
+                "type": "t_mapping(t_address,t_bool)",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_contract(IZetaVault)2685": {
+            "label": "contract IZetaVault",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_struct(Agent)2701_storage)": {
+            "label": "mapping(address => struct ZetaAgents.Agent)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Agent)2701_storage": {
+            "label": "struct ZetaAgents.Agent",
+            "members": [
+              {
+                "label": "whitelisted",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "riskScoreBps",
+                "type": "t_uint16",
+                "offset": 1,
+                "slot": "0"
+              },
+              {
+                "label": "feeScheduleCid",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint16": {
+            "label": "uint16",
+            "numberOfBytes": "2"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.ReentrancyGuard": [
+            {
+              "contract": "ReentrancyGuardUpgradeable",
+              "label": "_status",
+              "type": "t_uint256",
+              "src": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:43",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.AccessControl": [
+            {
+              "contract": "AccessControlUpgradeable",
+              "label": "_roles",
+              "type": "t_mapping(t_bytes32,t_struct(RoleData)26_storage)",
+              "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:62",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    },
+    "b913c9734ca4f8f84317994607ddfdd0d53acf9cd0774b2b0fb877b2f1082095": {
+      "address": "0xe79617A57347972d80596121c456ac018FaA4346",
+      "txHash": "0xf9078fa6697cd60707b9e43553e8a04d593a6af1d32d3ecb02bffcafb1d410c0",
+      "layout": {
+        "solcVersion": "0.8.24",
+        "storage": [
+          {
+            "label": "policy",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_contract(IZetaPolicyD)2977",
+            "contract": "ZetaDisputes",
+            "src": "contracts/ZetaDisputes.sol:17"
+          },
+          {
+            "label": "vault",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_contract(IZetaVaultD)3017",
+            "contract": "ZetaDisputes",
+            "src": "contracts/ZetaDisputes.sol:18"
+          },
+          {
+            "label": "disputeState",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_uint256,t_uint8)",
+            "contract": "ZetaDisputes",
+            "src": "contracts/ZetaDisputes.sol:21"
+          },
+          {
+            "label": "orderPods",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_uint256,t_array(t_struct(PodRef)3034_storage)dyn_storage)",
+            "contract": "ZetaDisputes",
+            "src": "contracts/ZetaDisputes.sol:24"
+          },
+          {
+            "label": "userClaims",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_uint256,t_array(t_struct(PodRef)3034_storage)dyn_storage)",
+            "contract": "ZetaDisputes",
+            "src": "contracts/ZetaDisputes.sol:25"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)26_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(AccessControlStorage)36_storage": {
+            "label": "struct AccessControlUpgradeable.AccessControlStorage",
+            "members": [
+              {
+                "label": "_roles",
+                "type": "t_mapping(t_bytes32,t_struct(RoleData)26_storage)",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(InitializableStorage)147_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(RoleData)26_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "hasRole",
+                "type": "t_mapping(t_address,t_bool)",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_array(t_struct(PodRef)3034_storage)dyn_storage": {
+            "label": "struct ZetaDisputes.PodRef[]",
+            "numberOfBytes": "32"
+          },
+          "t_contract(IZetaPolicyD)2977": {
+            "label": "contract IZetaPolicyD",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IZetaVaultD)3017": {
+            "label": "contract IZetaVaultD",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_uint256,t_array(t_struct(PodRef)3034_storage)dyn_storage)": {
+            "label": "mapping(uint256 => struct ZetaDisputes.PodRef[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint8)": {
+            "label": "mapping(uint256 => uint8)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(PodRef)3034_storage": {
+            "label": "struct ZetaDisputes.PodRef",
+            "members": [
+              {
+                "label": "hash",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "kind",
+                "type": "t_uint8",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.AccessControl": [
+            {
+              "contract": "AccessControlUpgradeable",
+              "label": "_roles",
+              "type": "t_mapping(t_bytes32,t_struct(RoleData)26_storage)",
+              "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:62",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    },
+    "6ee39734c46be1d1438d156391f8860466528995172476e66b5577a8ec7a7168": {
+      "address": "0xac4aE8d8C422001f1b961A5CcAf3e4614451ceC8",
+      "txHash": "0x634cd860ea114403cb882cfb147881785b4564fa73c5027511346a87fe9c0e1b",
+      "layout": {
+        "solcVersion": "0.8.24",
+        "storage": [
+          {
+            "label": "policy",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_contract(IZetaPolicy)3358",
+            "contract": "ZetaOrderBook",
+            "src": "contracts/ZetaOrderBook.sol:27"
+          },
+          {
+            "label": "agents",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_contract(IZetaAgents)3373",
+            "contract": "ZetaOrderBook",
+            "src": "contracts/ZetaOrderBook.sol:28"
+          },
+          {
+            "label": "vault",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_contract(IZetaVault)3401",
+            "contract": "ZetaOrderBook",
+            "src": "contracts/ZetaOrderBook.sol:29"
+          },
+          {
+            "label": "nextOrderId",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_uint256",
+            "contract": "ZetaOrderBook",
+            "src": "contracts/ZetaOrderBook.sol:49"
+          },
+          {
+            "label": "orders",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_uint256,t_struct(OrderIntent)3446_storage)",
+            "contract": "ZetaOrderBook",
+            "src": "contracts/ZetaOrderBook.sol:50"
+          },
+          {
+            "label": "commits",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_struct(QuoteCommit)3451_storage))",
+            "contract": "ZetaOrderBook",
+            "src": "contracts/ZetaOrderBook.sol:51"
+          },
+          {
+            "label": "revealed",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_mapping(t_uint256,t_mapping(t_address,t_struct(Quote)3460_storage))",
+            "contract": "ZetaOrderBook",
+            "src": "contracts/ZetaOrderBook.sol:52"
+          },
+          {
+            "label": "candidateAgents",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_mapping(t_uint256,t_array(t_address)dyn_storage)",
+            "contract": "ZetaOrderBook",
+            "src": "contracts/ZetaOrderBook.sol:53"
+          },
+          {
+            "label": "selectedAgent",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "ZetaOrderBook",
+            "src": "contracts/ZetaOrderBook.sol:54"
+          },
+          {
+            "label": "selectedAt",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_mapping(t_uint256,t_uint64)",
+            "contract": "ZetaOrderBook",
+            "src": "contracts/ZetaOrderBook.sol:55"
+          },
+          {
+            "label": "weightPrice",
+            "offset": 0,
+            "slot": "10",
+            "type": "t_uint32",
+            "contract": "ZetaOrderBook",
+            "src": "contracts/ZetaOrderBook.sol:58"
+          },
+          {
+            "label": "weightEta",
+            "offset": 4,
+            "slot": "10",
+            "type": "t_uint32",
+            "contract": "ZetaOrderBook",
+            "src": "contracts/ZetaOrderBook.sol:59"
+          },
+          {
+            "label": "weightRisk",
+            "offset": 8,
+            "slot": "10",
+            "type": "t_uint32",
+            "contract": "ZetaOrderBook",
+            "src": "contracts/ZetaOrderBook.sol:60"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)26_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(AccessControlStorage)36_storage": {
+            "label": "struct AccessControlUpgradeable.AccessControlStorage",
+            "members": [
+              {
+                "label": "_roles",
+                "type": "t_mapping(t_bytes32,t_struct(RoleData)26_storage)",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(InitializableStorage)147_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(PausableStorage)298_storage": {
+            "label": "struct PausableUpgradeable.PausableStorage",
+            "members": [
+              {
+                "label": "_paused",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(ReentrancyGuardStorage)362_storage": {
+            "label": "struct ReentrancyGuardUpgradeable.ReentrancyGuardStorage",
+            "members": [
+              {
+                "label": "_status",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(RoleData)26_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "hasRole",
+                "type": "t_mapping(t_address,t_bool)",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_contract(IZetaAgents)3373": {
+            "label": "contract IZetaAgents",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IZetaPolicy)3358": {
+            "label": "contract IZetaPolicy",
+            "numberOfBytes": "20"
+          },
+          "t_contract(IZetaVault)3401": {
+            "label": "contract IZetaVault",
+            "numberOfBytes": "20"
+          },
+          "t_enum(OrderStatus)3424": {
+            "label": "enum ZetaOrderBook.OrderStatus",
+            "members": [
+              "Created",
+              "Selected",
+              "Accepted",
+              "Completed",
+              "Canceled",
+              "Disputed",
+              "Resolved"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_struct(Quote)3460_storage)": {
+            "label": "mapping(address => struct ZetaOrderBook.Quote)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(QuoteCommit)3451_storage)": {
+            "label": "mapping(address => struct ZetaOrderBook.QuoteCommit)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_array(t_address)dyn_storage)": {
+            "label": "mapping(uint256 => address[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_struct(Quote)3460_storage))": {
+            "label": "mapping(uint256 => mapping(address => struct ZetaOrderBook.Quote))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_mapping(t_address,t_struct(QuoteCommit)3451_storage))": {
+            "label": "mapping(uint256 => mapping(address => struct ZetaOrderBook.QuoteCommit))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(OrderIntent)3446_storage)": {
+            "label": "mapping(uint256 => struct ZetaOrderBook.OrderIntent)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint64)": {
+            "label": "mapping(uint256 => uint64)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(OrderIntent)3446_storage": {
+            "label": "struct ZetaOrderBook.OrderIntent",
+            "members": [
+              {
+                "label": "user",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "token",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "maxTotal",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "originShopId",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "destRegion",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "commodityId",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "qty",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "createdAt",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "7"
+              },
+              {
+                "label": "expiry",
+                "type": "t_uint64",
+                "offset": 8,
+                "slot": "7"
+              },
+              {
+                "label": "status",
+                "type": "t_enum(OrderStatus)3424",
+                "offset": 16,
+                "slot": "7"
+              }
+            ],
+            "numberOfBytes": "256"
+          },
+          "t_struct(Quote)3460_storage": {
+            "label": "struct ZetaOrderBook.Quote",
+            "members": [
+              {
+                "label": "feeTotal",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "holdbackBps",
+                "type": "t_uint16",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "microbondBps",
+                "type": "t_uint16",
+                "offset": 2,
+                "slot": "1"
+              },
+              {
+                "label": "etaHours",
+                "type": "t_uint32",
+                "offset": 4,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(QuoteCommit)3451_storage": {
+            "label": "struct ZetaOrderBook.QuoteCommit",
+            "members": [
+              {
+                "label": "commit",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "ttl",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint16": {
+            "label": "uint16",
+            "numberOfBytes": "2"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.ReentrancyGuard": [
+            {
+              "contract": "ReentrancyGuardUpgradeable",
+              "label": "_status",
+              "type": "t_uint256",
+              "src": "@openzeppelin/contracts-upgradeable/utils/ReentrancyGuardUpgradeable.sol:43",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Pausable": [
+            {
+              "contract": "PausableUpgradeable",
+              "label": "_paused",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/utils/PausableUpgradeable.sol:21",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.AccessControl": [
+            {
+              "contract": "AccessControlUpgradeable",
+              "label": "_roles",
+              "type": "t_mapping(t_bytes32,t_struct(RoleData)26_storage)",
+              "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:62",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

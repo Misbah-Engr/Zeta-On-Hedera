@@ -54,6 +54,23 @@ The Zeta protocol is composed of five core smart contracts that work together to
 *   **`ZetaVault.sol`**: Acts as the treasury and escrow for the platform. It holds the funds for orders, manages the standing bonds for agents, and handles the distribution of payments upon order completion.
 *   **`ZetaDisputes.sol`**: Manages the dispute resolution process. If a user is unsatisfied with an order, they can open a claim, and this contract resolves the dispute.
 
+## Verified Implementation Contracts
+
+0x23319d59e36C4463967b0aD4be5F5b99403D6f97 
+ZetaPolicy
+
+0xc17b3Cb4C1988867A342EF02c2C41Fe32287693D 
+ZetaVault
+
+0xBb3e9Ed8b4F74443735a0aB9EC59d144DF9F6CAa 
+ZetaAgents
+
+0xe79617A57347972d80596121c456ac018FaA4346 
+ZetaDisputes
+
+0xac4aE8d8C422001f1b961A5CcAf3e4614451ceC8
+ZetaOrderBook
+
 ## Tech Stack
 
 *   **Framework**: React 18 + TypeScript.
@@ -78,11 +95,11 @@ VITE_RPC_URL=https://testnet.hashio.io/api
 VITE_MIRROR_URL=https://testnet.mirrornode.hedera.com
 VITE_HCS_TOPIC_ID=0.0.123456
 
-VITE_CONTRACT_POLICY=0x0000000000000000000000000000000000000001
-VITE_CONTRACT_AGENTS=0x0000000000000000000000000000000000000002
-VITE_CONTRACT_ORDERBOOK=0x0000000000000000000000000000000000000003
-VITE_CONTRACT_VAULT=0x0000000000000000000000000000000000000004
-VITE_CONTRACT_DISPUTES=0x0000000000000000000000000000000000000005
+POLICY_ADDR=0xF4C82979Bd5ABB60C497dfeCEa46fEfAC8bd9b91
+VAULT_ADDR=0x9DE3DCfc3810D9a8eeb7d219B3c33BfcDf7EfBf1
+AGENTS_ADDR=0x3C3216bCDEe8b85cA82222Ed251A7bd765569b4E
+DISPUTES_ADDR=0x58b8661801C2AAe8E9E7A5028acc30fad19C23d0
+ORDERBOOK_ADDR=0xfC01208ffF34C3987431d15fEEE23444F11A8317
 
 VITE_ALLOWED_TOKEN=HBAR
 VITE_TREASURY_BPS=1000

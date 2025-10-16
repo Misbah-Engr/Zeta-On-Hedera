@@ -1,16 +1,24 @@
-import { HardhatUserConfig } from "hardhat/config";
-import "@nomicfoundation/hardhat-toolbox";
-import "@openzeppelin/hardhat-upgrades";
+import "@nomicfoundation/hardhat-verify";
 import * as dotenv from "dotenv";
+import "@openzeppelin/hardhat-upgrades";
+
+
 dotenv.config();
 
-const config: HardhatUserConfig = {
+const config = {
   solidity: { version: "0.8.24", settings: { optimizer: { enabled: true, runs: 200 } } },
   networks: {
     hedera_testnet: {
       url: process.env.HEDERA_RPC_URL || "https://testnet.hashio.io/api",
-      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : []
-    }
-  }
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+      timeout: 180000,
+    },
+  },
+  // Enables Sourcify submission so HashScan can pick it up
+  sourcify: { enabled: true,
+              apiUrl: "https://server-verify.hashscan.io",
+              browserUrl: "https://repository-verify.hashscan.io"
+   },
+
 };
 export default config;

@@ -1,5 +1,4 @@
-# Zeta | Hedera Global Onchain
-
+# Zeta | Global Logistics goes Onchain 
 This is the frontend for the Zeta Onchain Logistics Escrow Platform, built on the Hedera EVM.
 
 ## Tech Stack
