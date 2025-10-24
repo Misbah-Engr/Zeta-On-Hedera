@@ -81,6 +81,19 @@ ZetaOrderBook
 *   **Transport**: GraphQL for indexer reads; REST for small helper endpoints.
 *   **Styling**: Tailwind CSS.
 
+## Frontend console
+
+The `frontend/` directory hosts a minimal Zeta control surface that connects to the deployed Hedera suite via HashPack.
+
+```
+cd frontend
+cp .env.example .env   # adjust addresses or network if required
+npm install
+npm run dev
+```
+
+The console automatically groups every ABI function for `ZetaPolicy`, `ZetaAgents`, `ZetaOrderBook`, `ZetaVault`, and `ZetaDisputes`. Read calls work immediately through the configured RPC endpoint; write actions require a connected HashPack account with the relevant protocol role.
+
 ## Environment variables (.env)
 
 The following environment variables are required for the frontend application:
