@@ -83,9 +83,7 @@ ZetaOrderBook
 
 ## Frontend console
 
-The `frontend/` directory now provides a user-facing console that guides non-technical senders, agents, and admins through the
-entire Zeta workflow. Pages cover delivery booking, agent operations, dispute handling, and admin/system controls, all wrapped
-around a HashPack connection flow.
+The `frontend/` directory hosts a minimal Zeta control surface that connects to the deployed Hedera suite via HashPack.
 
 ```
 cd frontend
@@ -94,9 +92,7 @@ npm install
 npm run dev
 ```
 
-Every contract function for `ZetaPolicy`, `ZetaAgents`, `ZetaOrderBook`, `ZetaVault`, and `ZetaDisputes` is still exposed, but they
-are organised under intuitive journeys (Send & Track, Agent Hub, Disputes, System). Read calls work immediately through the
-configured RPC endpoint; write actions require a connected HashPack account with the relevant protocol role.
+The console automatically groups every ABI function for `ZetaPolicy`, `ZetaAgents`, `ZetaOrderBook`, `ZetaVault`, and `ZetaDisputes`. Read calls work immediately through the configured RPC endpoint; write actions require a connected HashPack account with the relevant protocol role.
 
 ## Environment variables (.env)
 

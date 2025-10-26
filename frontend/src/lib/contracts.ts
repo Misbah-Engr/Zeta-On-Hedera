@@ -18,12 +18,12 @@ function resolveAddress(key: string): string {
 
 export const RPC_URL = env.VITE_RPC_URL ?? "https://testnet.hashio.io/api";
 
-export const DEFAULT_ADMIN_ROLE = "0x0000000000000000000000000000000000000000000000000000000000000000";
-export const ROLE_POLICY_ADMIN = "0xb6652ef5536f03f8263baa70f5d3796a2d1ef3014811f3b9b296298a730ddc26"; // keccak256("ROLE_POLICY_ADMIN")
-export const ROLE_OPERATOR = "0x69c632f0dc196dcf0ec6a3ad0cc10908df87a4db504a76af5a985c0d19af6721"; // keccak256("ROLE_OPERATOR")
-export const ROLE_LISTING = "0xac8f0465ac856633dfe756564c9dff2fe26e3241ed5e20026887266a7698840a"; // keccak256("ROLE_LISTING")
+const DEFAULT_ADMIN_ROLE = "0x0000000000000000000000000000000000000000000000000000000000000000";
+const ROLE_POLICY_ADMIN = "0xb6652ef5536f03f8263baa70f5d3796a2d1ef3014811f3b9b296298a730ddc26"; // keccak256("ROLE_POLICY_ADMIN")
+const ROLE_OPERATOR = "0x69c632f0dc196dcf0ec6a3ad0cc10908df87a4db504a76af5a985c0d19af6721"; // keccak256("ROLE_OPERATOR")
+const ROLE_LISTING = "0xac8f0465ac856633dfe756564c9dff2fe26e3241ed5e20026887266a7698840a"; // keccak256("ROLE_LISTING")
 
-export const ZETA_POLICY_ABI: Abi = [
+const ZETA_POLICY_ABI: Abi = [
   { inputs: [], name: "ROLE_OPERATOR", outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }], stateMutability: "view", type: "function" },
   { inputs: [], name: "ROLE_LISTING", outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }], stateMutability: "view", type: "function" },
   { inputs: [], name: "DEFAULT_ADMIN_ROLE", outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }], stateMutability: "view", type: "function" },
@@ -156,7 +156,7 @@ export const ZETA_POLICY_ABI: Abi = [
   }
 ];
 
-export const ZETA_AGENTS_ABI: Abi = [
+const ZETA_AGENTS_ABI: Abi = [
   { inputs: [], name: "ROLE_LISTING", outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }], stateMutability: "view", type: "function" },
   { inputs: [], name: "DEFAULT_ADMIN_ROLE", outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }], stateMutability: "view", type: "function" },
   { inputs: [], name: "vault", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" },
@@ -248,7 +248,7 @@ export const ZETA_AGENTS_ABI: Abi = [
   }
 ];
 
-export const ZETA_ORDERBOOK_ABI: Abi = [
+const ZETA_ORDERBOOK_ABI: Abi = [
   { inputs: [], name: "policy", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" },
   { inputs: [], name: "agents", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" },
   { inputs: [], name: "vault", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" },
@@ -428,7 +428,7 @@ export const ZETA_ORDERBOOK_ABI: Abi = [
   }
 ];
 
-export const ZETA_VAULT_ABI: Abi = [
+const ZETA_VAULT_ABI: Abi = [
   { inputs: [], name: "policy", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" },
   { inputs: [], name: "agents", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" },
   {
@@ -575,7 +575,7 @@ export const ZETA_VAULT_ABI: Abi = [
   }
 ];
 
-export const ZETA_DISPUTES_ABI: Abi = [
+const ZETA_DISPUTES_ABI: Abi = [
   { inputs: [], name: "policy", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" },
   { inputs: [], name: "vault", outputs: [{ internalType: "address", name: "", type: "address" }], stateMutability: "view", type: "function" },
   { inputs: [{ internalType: "uint256", name: "", type: "uint256" }], name: "disputeState", outputs: [{ internalType: "uint8", name: "", type: "uint8" }], stateMutability: "view", type: "function" },
@@ -756,12 +756,3 @@ export const CONTRACTS: ContractConfig[] = [
     ]
   }
 ];
-
-export const CONTRACT_MAP = Object.fromEntries(CONTRACTS.map((contract) => [contract.name, contract]));
-
-export const ROLE_IDS = {
-  DEFAULT_ADMIN_ROLE,
-  ROLE_POLICY_ADMIN,
-  ROLE_OPERATOR,
-  ROLE_LISTING
-};
