@@ -1,0 +1,150 @@
+.app-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: #f6f8fb;
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.25rem 2.5rem;
+  background: linear-gradient(135deg, rgba(13, 16, 22, 0.95), rgba(17, 25, 36, 0.9));
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.brand-logo {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: radial-gradient(circle at 25% 25%, rgba(61, 141, 255, 0.55), transparent),
+    rgba(36, 43, 61, 0.95);
+  display: grid;
+  place-items: center;
+  font-size: 1.7rem;
+  font-weight: 600;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: 1.4rem;
+  letter-spacing: 0.02em;
+}
+
+.brand p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-links a {
+  padding: 0.55rem 1rem;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.68);
+  transition: background 0.3s, color 0.3s;
+  font-weight: 500;
+}
+
+.nav-links a.active,
+.nav-links a:hover {
+  background: rgba(61, 141, 255, 0.16);
+  color: #fff;
+}
+
+.wallet-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.wallet-controls .hint {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+button {
+  border: none;
+  border-radius: 14px;
+  padding: 0.65rem 1.4rem;
+  background: linear-gradient(135deg, rgba(68, 134, 255, 0.85), rgba(48, 97, 255, 0.9));
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 15px 30px rgba(37, 84, 255, 0.25);
+}
+
+button.ghost {
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 32px rgba(37, 84, 255, 0.3);
+}
+
+.status-chip {
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.status-chip.state-disconnected {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.status-chip.state-connected {
+  background: rgba(61, 141, 255, 0.18);
+  color: #87b7ff;
+}
+
+.status-chip.state-connecting {
+  background: rgba(255, 181, 71, 0.22);
+  color: #ffb547;
+}
+
+.app-main {
+  flex: 1;
+  padding: 2.5rem;
+}
+
+@media (max-width: 960px) {
+  .app-header {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .brand {
+    justify-content: center;
+  }
+
+  .nav-links {
+    justify-content: center;
+  }
+
+  .wallet-controls {
+    justify-content: center;
+  }
+}
