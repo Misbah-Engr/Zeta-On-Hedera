@@ -81,6 +81,23 @@ ZetaOrderBook
 *   **Transport**: GraphQL for indexer reads; REST for small helper endpoints.
 *   **Styling**: Tailwind CSS.
 
+## Frontend console
+
+The `frontend/` directory now provides a user-facing console that guides non-technical senders, agents, and admins through the
+entire Zeta workflow. Pages cover delivery booking, agent operations, dispute handling, and admin/system controls, all wrapped
+around a HashPack connection flow.
+
+```
+cd frontend
+cp .env.example .env   # adjust addresses or network if required
+npm install
+npm run dev
+```
+
+Every contract function for `ZetaPolicy`, `ZetaAgents`, `ZetaOrderBook`, `ZetaVault`, and `ZetaDisputes` is still exposed, but they
+are organised under intuitive journeys (Send & Track, Agent Hub, Disputes, System). Read calls work immediately through the
+configured RPC endpoint; write actions require a connected HashPack account with the relevant protocol role.
+
 ## Environment variables (.env)
 
 The following environment variables are required for the frontend application:
