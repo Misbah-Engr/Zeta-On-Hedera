@@ -12,7 +12,7 @@ export const ORDERBOOK_ABI = [
   'function getAgentProfile(address agent) view returns (tuple(string handle, string bio, string avatar, string baseLocation, uint8 rating, uint256 completedDeliveries, uint256 disputedDeliveries))',
   'function getAgentAds(address agent) view returns (tuple(string commodity, string location, uint256 price, uint256 minWeight, uint256 maxWeight, uint8 availability)[])',
   'function getOrderTimeline(uint256 orderId) view returns (tuple(uint8 status, string note, uint256 at)[])',
-  'function getDispute(uint256 orderId) view returns (tuple(uint8 stage, string claimant, string evidence, string resolution)')
+  'function getDispute(uint256 orderId) view returns (tuple(uint8 stage, string claimant, string evidence, string resolution))'
 ];
 
 export const orderbookInterface = new Interface(ORDERBOOK_ABI);

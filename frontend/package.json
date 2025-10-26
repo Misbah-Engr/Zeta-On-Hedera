@@ -9,11 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hashgraph/sdk": "^2.75.0",
+    "buffer": "^6.0.3",
+    "ethers": "6.10.0",
     "hashconnect": "3.0.14",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "react-router-dom": "6.22.3",
-    "ethers": "6.10.0"
+    "react-router-dom": "6.22.3"
   },
   "devDependencies": {
     "@types/react": "18.2.66",

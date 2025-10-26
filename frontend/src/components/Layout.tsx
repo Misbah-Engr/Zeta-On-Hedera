@@ -14,7 +14,7 @@ interface LayoutProps {
 }
 
 export const Layout = ({ children }: LayoutProps) => {
-  const { connect, disconnect, isConnected, accountId, walletState, hashpackAvailable } =
+  const { connect, disconnect, isConnected, accountId, walletState, pairingString, hashpackAvailable } =
     useHashConnect();
 
   return (
@@ -44,6 +44,12 @@ export const Layout = ({ children }: LayoutProps) => {
             </button>
           ) : (
             <button onClick={connect}>Connect HashPack</button>
+          )}
+          {pairingString && (
+            <div className="pairing-string">
+              <p>Copy and paste this pairing string into HashPack:</p>
+              <code>{pairingString}</code>
+            </div>
           )}
           {!hashpackAvailable && <span className="hint">Open HashPack to pair</span>}
         </div>

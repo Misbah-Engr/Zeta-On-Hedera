@@ -8,53 +8,72 @@ import {
   useRef,
   useState
 } from 'react';
-import HashConnect, { HashConnectConnectionState, HashConnectTypes } from 'hashconnect';
+import { HashConnect, HashConnectConnectionState, HashConnectTypes } from 'hashconnect';
+import { LedgerId } from '@hashgraph/sdk';
 
 interface HashConnectContextValue {
   connect: () => Promise<void>;
   disconnect: () => void;
   pairingData?: HashConnectTypes.SavedPairingData;
+  pairingString?: string;
   accountId?: string;
   topic?: string;
   isConnected: boolean;
   walletState: string;
   hashconnect?: HashConnect;
-  hashpackAvailable: boolean;
 }
 
 const APP_METADATA: HashConnectTypes.AppMetadata = {
   name: 'Zeta Logistics Marketplace',
   description: 'Onchain P2P fulfilment marketplace on Hedera',
-  icon: 'https://www.binance.com/resources/img/logo-crypto.png'
+  icon: 'https://www.binance.com/resources/img/logo-crypto.png',
+  url: 'https://example.com'
 };
 
-const PROJECT_ID = '875715c9db8209ba690a58e170657737';
+const PROJECT_ID = 'd8fae9ed380aec17a89431006c52aa53';
 
 const HashConnectContext = createContext<HashConnectContextValue | undefined>(undefined);
 
 export const HashConnectProvider = ({ children }: PropsWithChildren) => {
   const hashconnectRef = useRef<HashConnect>();
   const [pairingData, setPairingData] = useState<HashConnectTypes.SavedPairingData>();
+  const [pairingString, setPairingString] = useState<string>();
   const [topic, setTopic] = useState<string>();
   const [walletState, setWalletState] = useState<HashConnectConnectionState>(
     HashConnectConnectionState.Disconnected
   );
-  const [hashpackAvailable, setHashpackAvailable] = useState(false);
+
+  const initialized = useRef(false);
 
   useEffect(() => {
-    const hashconnect = new HashConnect(true);
+    if (initialized.current) return;
+    initialized.current = true;
+
+    const hashconnect = new HashConnect(LedgerId.TESTNET, PROJECT_ID, APP_METADATA, true);
     hashconnectRef.current = hashconnect;
     let mounted = true;
 
+    const pairingCallback = (newPairing: HashConnectTypes.SavedPairingData) => {
+      if (!mounted) return;
+      setPairingData(newPairing);
+    };
+
+    const stateCallback = (state: HashConnectConnectionState) => {
+      if (!mounted) return;
+      setWalletState(state);
+    };
+
+    hashconnect.pairingEvent.on(pairingCallback);
+    hashconnect.connectionStatusChangeEvent.on(stateCallback);
+
     const init = async () => {
       try {
-        const initData = await hashconnect.init(APP_METADATA, PROJECT_ID, true);
-        if (!mounted) return;
+        const initData = await hashconnect.init();
+        if (!mounted || !initData) return;
         setTopic(initData.topic);
         setWalletState(hashconnect.hcData?.state ?? HashConnectConnectionState.Disconnected);
         if (initData.pairingData?.length) {
           setPairingData(initData.pairingData[0]);
-          setHashpackAvailable(true);
         }
         hashconnect.findLocalWallets();
       } catch (error) {
@@ -62,29 +81,13 @@ export const HashConnectProvider = ({ children }: PropsWithChildren) => {
       }
     };
 
-    const foundListener = hashconnect.foundExtensionEvent.on((walletMetadata) => {
-      if (!mounted) return;
-      setHashpackAvailable(walletMetadata.some((wallet) => wallet.name.toLowerCase().includes('hashpack')));
-    });
-
-    const pairingListener = hashconnect.pairingEvent.on((newPairing) => {
-      if (!mounted) return;
-      setPairingData(newPairing);
-    });
-
-    const stateListener = hashconnect.connectionStatusChangeEvent.on((state) => {
-      if (!mounted) return;
-      setWalletState(state);
-    });
-
     init();
 
     return () => {
       mounted = false;
-      foundListener();
-      pairingListener();
-      stateListener();
-      hashconnectRef.current?.clearConnections();
+      hashconnect.pairingEvent.off(pairingCallback);
+      hashconnect.connectionStatusChangeEvent.off(stateCallback);
+      hashconnectRef.current?.disconnect(pairingData?.topic);
     };
   }, []);
 
@@ -92,17 +95,18 @@ export const HashConnectProvider = ({ children }: PropsWithChildren) => {
     const hashconnect = hashconnectRef.current;
     if (!hashconnect) return;
     if (walletState === HashConnectConnectionState.Connecting) return;
-    if (!hashpackAvailable) {
-      hashconnect.findLocalWallets();
-    }
-    if (topic) {
-      await hashconnect.connectToLocalWallet();
-    } else {
-      const initData = await hashconnect.init(APP_METADATA, PROJECT_ID, true);
+
+    if (!topic) {
+      const initData = await hashconnect.init();
+      if (!initData) return;
       setTopic(initData.topic);
-      await hashconnect.connectToLocalWallet();
+      const pairingString = await hashconnect.connect();
+      setPairingString(pairingString);
+    } else if (!pairingData) {
+      const pairingString = await hashconnect.connect();
+      setPairingString(pairingString);
     }
-  }, [hashpackAvailable, topic, walletState]);
+  }, [topic, walletState, pairingData]);
 
   const disconnect = useCallback(() => {
     const hashconnect = hashconnectRef.current;
@@ -135,14 +139,14 @@ export const HashConnectProvider = ({ children }: PropsWithChildren) => {
       connect,
       disconnect,
       pairingData,
+      pairingString,
       accountId: pairingData?.accountIds?.[0],
       topic,
       isConnected: !!pairingData?.accountIds?.length,
       walletState: walletStateLabel,
-      hashconnect: hashconnectRef.current,
-      hashpackAvailable
+      hashconnect: hashconnectRef.current
     }),
-    [connect, disconnect, pairingData, topic, walletStateLabel, hashpackAvailable]
+    [connect, disconnect, pairingData, topic, walletStateLabel]
   );
 
   return <HashConnectContext.Provider value={value}>{children}</HashConnectContext.Provider>;

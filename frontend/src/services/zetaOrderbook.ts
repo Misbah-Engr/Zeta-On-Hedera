@@ -2,6 +2,7 @@ import { useCallback } from 'react';
 import { decodeFunctionResult, encodeFunction, CONTRACT_ID } from './hedera';
 import { Agent, AgentAd, AgentProfile, Dispute, Order, OrderLifecycleEvent } from '../types/order';
 import { useHashconnectSigner } from './hedera';
+import { AccountId } from '@hashgraph/sdk';
 
 const FALLBACK_AGENTS: Agent[] = [
   {
@@ -161,7 +162,7 @@ export const useOrderbookApi = () => {
 
   const fetchAgentProfile = useCallback(async (agent: string): Promise<AgentProfile> => {
     try {
-      const data = encodeFunction('getAgentProfile', [agent]);
+      const data = encodeFunction('getAgentProfile', [AccountId.fromString(agent).toSolidityAddress()]);
       const response = await callContract({
         contractId: CONTRACT_ID,
         data
@@ -195,7 +196,7 @@ export const useOrderbookApi = () => {
 
   const fetchAgentAds = useCallback(async (agent: string): Promise<AgentAd[]> => {
     try {
-      const data = encodeFunction('getAgentAds', [agent]);
+      const data = encodeFunction('getAgentAds', [AccountId.fromString(agent).toSolidityAddress()]);
       const response = await callContract({
         contractId: CONTRACT_ID,
         data
