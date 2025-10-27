@@ -2,13 +2,13 @@ import { FormEvent, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useOrderbookApi } from '../services/zetaOrderbook';
 import { Dispute } from '../types/order';
-import { useHashConnect } from '../hooks/useHashConnect';
+import { useAccount } from 'wagmi';
 import './PageStyles.css';
 
 const DisputeFlowPage = () => {
   const { orderId } = useParams();
   const navigate = useNavigate();
-  const { accountId } = useHashConnect();
+  const { address: accountId } = useAccount();
   const { fetchDispute } = useOrderbookApi();
   const [dispute, setDispute] = useState<Dispute | undefined>();
   const [statement, setStatement] = useState('');

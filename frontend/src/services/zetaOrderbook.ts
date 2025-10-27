@@ -1,7 +1,6 @@
 import { useCallback } from 'react';
-import { decodeFunctionResult, encodeFunction, CONTRACT_ID } from './hedera';
+import { useContractActions } from './hedera';
 import { Agent, AgentAd, AgentProfile, Dispute, Order, OrderLifecycleEvent } from '../types/order';
-import { useHashconnectSigner } from './hedera';
 import { AccountId } from '@hashgraph/sdk';
 
 const FALLBACK_AGENTS: Agent[] = [
@@ -88,28 +87,15 @@ const FALLBACK_DISPUTE: Dispute = {
 };
 
 export const useOrderbookApi = () => {
-  const { callContract } = useHashconnectSigner();
+  const { readContract } = useContractActions();
 
   const fetchOrdersForAccount = useCallback(async (account: string): Promise<Order[]> => {
     try {
-      const data = encodeFunction('getOrdersForAccount', [account]);
-      const response = await callContract({
-        contractId: CONTRACT_ID,
-        data
-      });
-      const decoded = decodeFunctionResult('getOrdersForAccount', response.bytes ?? '0x');
-      const items = (decoded[0] ?? []) as Array<{
-        id: bigint;
-        buyer: string;
-        agent: string;
-        commodity: string;
-        origin: string;
-        destination: string;
-        status: number;
-        price: bigint;
-        createdAt: bigint;
-        updatedAt: bigint;
-      }>;
+      const items = await readContract({
+        functionName: 'getOrdersForAccount',
+        args: [account],
+      }) as Array<any>;
+
       return items.map((item) => ({
         id: item.id.toString(),
         buyer: item.buyer,
@@ -125,25 +111,14 @@ export const useOrderbookApi = () => {
       console.warn('Falling back to mocked orders', error);
       return FALLBACK_ORDERS;
     }
-  }, [callContract]);
+  }, [readContract]);
 
   const fetchActiveAds = useCallback(async (): Promise<AgentAd[]> => {
     try {
-      const data = encodeFunction('getActiveAds');
-      const response = await callContract({
-        contractId: CONTRACT_ID,
-        data
-      });
-      const decoded = decodeFunctionResult('getActiveAds', response.bytes ?? '0x');
-      const items = (decoded[0] ?? []) as Array<{
-        agent: string;
-        commodity: string;
-        location: string;
-        price: bigint;
-        minWeight: bigint;
-        maxWeight: bigint;
-        availability: number;
-      }>;
+      const items = await readContract({
+        functionName: 'getActiveAds',
+      }) as Array<any>;
+
       return items.map((item, index) => ({
         id: `${item.agent}-${index}`,
         agentId: item.agent,
@@ -158,25 +133,15 @@ export const useOrderbookApi = () => {
       console.warn('Falling back to mocked ads', error);
       return FALLBACK_ADS;
     }
-  }, [callContract]);
+  }, [readContract]);
 
   const fetchAgentProfile = useCallback(async (agent: string): Promise<AgentProfile> => {
     try {
-      const data = encodeFunction('getAgentProfile', [AccountId.fromString(agent).toSolidityAddress()]);
-      const response = await callContract({
-        contractId: CONTRACT_ID,
-        data
-      });
-      const decoded = decodeFunctionResult('getAgentProfile', response.bytes ?? '0x');
-      const profile = decoded[0] as {
-        handle: string;
-        bio: string;
-        avatar: string;
-        baseLocation: string;
-        rating: number;
-        completedDeliveries: bigint;
-        disputedDeliveries: bigint;
-      };
+      const profile = await readContract({
+        functionName: 'getAgentProfile',
+        args: [AccountId.fromString(agent).toSolidityAddress()],
+      }) as any;
+
       return {
         id: agent,
         handle: profile.handle,
@@ -192,24 +157,15 @@ export const useOrderbookApi = () => {
       const fallback = FALLBACK_AGENTS.find((a) => a.id === agent) ?? FALLBACK_AGENTS[0];
       return { ...fallback, bio: 'Globally trusted logistics orchestrator on Hedera.' };
     }
-  }, [callContract]);
+  }, [readContract]);
 
   const fetchAgentAds = useCallback(async (agent: string): Promise<AgentAd[]> => {
     try {
-      const data = encodeFunction('getAgentAds', [AccountId.fromString(agent).toSolidityAddress()]);
-      const response = await callContract({
-        contractId: CONTRACT_ID,
-        data
-      });
-      const decoded = decodeFunctionResult('getAgentAds', response.bytes ?? '0x');
-      const items = (decoded[0] ?? []) as Array<{
-        commodity: string;
-        location: string;
-        price: bigint;
-        minWeight: bigint;
-        maxWeight: bigint;
-        availability: number;
-      }>;
+      const items = await readContract({
+        functionName: 'getAgentAds',
+        args: [AccountId.fromString(agent).toSolidityAddress()],
+      }) as Array<any>;
+
       return items.map((item, index) => ({
         id: `${agent}-${index}`,
         agentId: agent,
@@ -224,21 +180,15 @@ export const useOrderbookApi = () => {
       console.warn('Falling back to mocked agent ads', error);
       return FALLBACK_ADS.filter((ad) => ad.agentId === agent);
     }
-  }, [callContract]);
+  }, [readContract]);
 
   const fetchOrderTimeline = useCallback(async (orderId: string): Promise<OrderLifecycleEvent[]> => {
     try {
-      const data = encodeFunction('getOrderTimeline', [BigInt(orderId)]);
-      const response = await callContract({
-        contractId: CONTRACT_ID,
-        data
-      });
-      const decoded = decodeFunctionResult('getOrderTimeline', response.bytes ?? '0x');
-      const items = (decoded[0] ?? []) as Array<{
-        status: number;
-        note: string;
-        at: bigint;
-      }>;
+      const items = await readContract({
+        functionName: 'getOrderTimeline',
+        args: [BigInt(orderId)],
+      }) as Array<any>;
+
       return items.map((item) => ({
         status: mapStatus(item.status),
         note: item.note,
@@ -248,22 +198,15 @@ export const useOrderbookApi = () => {
       console.warn('Falling back to mocked timeline', error);
       return FALLBACK_TIMELINE;
     }
-  }, [callContract]);
+  }, [readContract]);
 
   const fetchDispute = useCallback(async (orderId: string): Promise<Dispute | undefined> => {
     try {
-      const data = encodeFunction('getDispute', [BigInt(orderId)]);
-      const response = await callContract({
-        contractId: CONTRACT_ID,
-        data
-      });
-      const decoded = decodeFunctionResult('getDispute', response.bytes ?? '0x');
-      const dispute = decoded[0] as {
-        stage: number;
-        claimant: string;
-        evidence: string;
-        resolution: string;
-      };
+      const dispute = await readContract({
+        functionName: 'getDispute',
+        args: [BigInt(orderId)],
+      }) as any;
+
       return {
         stage: mapDisputeStage(dispute.stage),
         claimant: dispute.claimant,
@@ -274,7 +217,7 @@ export const useOrderbookApi = () => {
       console.warn('Falling back to mocked dispute', error);
       return FALLBACK_DISPUTE;
     }
-  }, [callContract]);
+  }, [readContract]);
 
   return {
     fetchOrdersForAccount,
@@ -332,5 +275,3 @@ const mapDisputeStage = (stage: number): Dispute['stage'] => {
       return 'Filed';
   }
 };
-
-

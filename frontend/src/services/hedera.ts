@@ -1,9 +1,10 @@
-import { useCallback } from 'react';
-import { Interface } from 'ethers';
-import { HashConnectTypes } from 'hashconnect';
-import { useHashConnectContext } from '../context/HashConnectContext';
+import { useCallback, useMemo, useState, useEffect } from 'react';
+import { Interface, BrowserProvider } from 'ethers';
+import { useAccount, useWalletClient } from 'wagmi';
+import { readContract as wagmiReadContract } from 'wagmi/actions';
+import { type WalletClient } from 'viem';
 
-export const CONTRACT_ID = '0.0.0'; // replace with deployed contract id
+export const CONTRACT_ID = '0.0.7063500'; // Zeta Order Book Contract ID
 export const MIRROR_NODE_URL = 'https://mainnet-public.mirrornode.hedera.com/api/v1';
 
 export const ORDERBOOK_ABI = [
@@ -32,42 +33,84 @@ export const encodeFunction = (name: string, args: unknown[] = []) =>
 export const decodeFunctionResult = (name: string, data: string) =>
   orderbookInterface.decodeFunctionResult(name, data);
 
-export const useHashconnectSigner = () => {
-  const { hashconnect, pairingData } = useHashConnectContext();
-  const accountId = pairingData?.accountIds?.[0];
-  const network = pairingData?.network ?? 'hedera';
+export async function walletClientToSigner(walletClient: WalletClient) {
+  const { account, chain, transport } = walletClient;
+  const network = {
+    chainId: chain.id,
+    name: chain.name,
+    ensAddress: chain.contracts?.ensRegistry?.address,
+  };
+  const provider = new BrowserProvider(transport, network);
+  const signer = await provider.getSigner(account.address);
+  return signer;
+}
+
+export const useEthersSigner = ({ chainId }: { chainId?: number } = {}) => {
+  const { data: walletClient } = useWalletClient({ chainId });
+  const [signer, setSigner] = useState<any>(undefined);
+
+  useEffect(() => {
+    const getSigner = async () => {
+      if (walletClient) {
+        const s = await walletClientToSigner(walletClient as WalletClient);
+        setSigner(s);
+      } else {
+        setSigner(undefined);
+      }
+    };
+    getSigner();
+  }, [walletClient]);
+
+  return signer;
+};
+
+export const useContractActions = () => {
+  const { address: accountId } = useAccount();
+  const signer = useEthersSigner();
 
   const callContract = useCallback(async (params: {
     data: string;
     contractId: string;
     gas?: number;
-  }): Promise<HashConnectTypes.TransactionResponse> => {
-    if (!hashconnect || !pairingData || !accountId) {
+  }): Promise<any> => {
+    if (!signer || !accountId) {
       throw new Error('Wallet not connected');
     }
-
-    const provider = hashconnect.getProvider(network, pairingData.topic, accountId);
-    const signer = hashconnect.getSigner(provider);
-    return signer.call({
-      ...params,
-      gas: params.gas ?? 150_000
+    
+    const tx = await signer.sendTransaction({
+        to: params.contractId,
+        data: params.data,
+        gasLimit: params.gas ?? 150_000,
     });
-  }, [accountId, hashconnect, network, pairingData]);
+    return tx.wait();
 
-  const sendTransaction = useCallback(async (params: HashConnectTypes.TransactionBase) => {
-    if (!hashconnect || !pairingData || !accountId) {
+  }, [accountId, signer]);
+
+  const readContract = useCallback(async (params: {
+    functionName: string;
+    args?: any[];
+  }) => {
+    const result = await wagmiReadContract({
+        address: CONTRACT_ID as `0x${string}`,
+        abi: ORDERBOOK_ABI,
+        functionName: params.functionName,
+        args: params.args,
+    });
+    return result;
+  }, []);
+
+  const sendTransaction = useCallback(async (params: any) => {
+    if (!signer || !accountId) {
       throw new Error('Wallet not connected');
     }
-
-    const provider = hashconnect.getProvider(network, pairingData.topic, accountId);
-    const signer = hashconnect.getSigner(provider);
-    return signer.sendTransaction(params);
-  }, [accountId, hashconnect, network, pairingData]);
+    const tx = await signer.sendTransaction(params);
+    return tx.wait();
+  }, [accountId, signer]);
 
   return {
     callContract,
+    readContract,
     sendTransaction,
     accountId
   };
 };
-

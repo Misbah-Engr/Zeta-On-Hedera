@@ -2,13 +2,13 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useOrderbookApi } from '../services/zetaOrderbook';
 import { Order } from '../types/order';
-import { useHashConnect } from '../hooks/useHashConnect';
+import { useAccount } from 'wagmi';
 import './PageStyles.css';
 
 const statusBadgeClass = (status: Order['status']) => `badge badge-${status.toLowerCase()}`;
 
 const OrdersPage = () => {
-  const { accountId } = useHashConnect();
+  const { address: accountId } = useAccount();
   const { fetchOrdersForAccount } = useOrderbookApi();
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(false);

@@ -1,7 +1,7 @@
 import { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AgentRegistrationPayload } from '../types/order';
-import { useHashConnect } from '../hooks/useHashConnect';
+import { useAccount } from 'wagmi';
 import './PageStyles.css';
 
 const defaultPayload: AgentRegistrationPayload = {
@@ -18,7 +18,7 @@ const defaultPayload: AgentRegistrationPayload = {
 
 const AgentRegistrationPage = () => {
   const navigate = useNavigate();
-  const { accountId } = useHashConnect();
+  const { address: accountId } = useAccount();
   const [payload, setPayload] = useState(defaultPayload);
   const [submitted, setSubmitted] = useState(false);
 

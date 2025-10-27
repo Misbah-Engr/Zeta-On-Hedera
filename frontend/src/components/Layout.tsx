@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useHashConnect } from '../hooks/useHashConnect';
 import './Layout.css';
 
 const navItems = [
@@ -14,8 +13,6 @@ interface LayoutProps {
 }
 
 export const Layout = ({ children }: LayoutProps) => {
-  const { connect, disconnect, isConnected, accountId, walletState, pairingString, hashpackAvailable } =
-    useHashConnect();
 
   return (
     <div className="app-shell">
@@ -35,23 +32,7 @@ export const Layout = ({ children }: LayoutProps) => {
           ))}
         </nav>
         <div className="wallet-controls">
-          <span className={`status-chip state-${walletState.toLowerCase()}`}>
-            {walletState}
-          </span>
-          {isConnected ? (
-            <button className="ghost" onClick={disconnect}>
-              {accountId}
-            </button>
-          ) : (
-            <button onClick={connect}>Connect HashPack</button>
-          )}
-          {pairingString && (
-            <div className="pairing-string">
-              <p>Copy and paste this pairing string into HashPack:</p>
-              <code>{pairingString}</code>
-            </div>
-          )}
-          {!hashpackAvailable && <span className="hint">Open HashPack to pair</span>}
+          <w3m-button />
         </div>
       </header>
       <main className="app-main">{children}</main>
