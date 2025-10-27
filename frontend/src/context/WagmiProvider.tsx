@@ -15,7 +15,7 @@ const metadata = {
   name: 'Zeta Logistics Marketplace',
   description: 'Onchain P2P fulfilment marketplace on Hedera',
   url: 'https://5173-cs-8e1de557-b920-40e7-8446-73ec9ed9d802.cs-europe-west1-haha.cloudshell.dev',
-  icons: ['https://www.binance.com/resources/img/logo-crypto.png']
+  icons: ['src/zetalogo.png']
 }
 
 const chains = [hederaTestnet]
