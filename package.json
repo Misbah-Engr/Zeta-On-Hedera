@@ -8,6 +8,10 @@
     "@openzeppelin/contracts-upgradeable": "^5.0.2",
     "@openzeppelin/hardhat-upgrades": "^3.0.0",
     "dotenv": "^16.4.5",
-    "hardhat": "^2.22.10"
+    "hardhat": "^2.22.10",
+    "@cloudflare/workers-types": "^4.20241004.0"
+  },
+  "dependencies": {
+    "ulid": "^2.3.0"
   }
 }
