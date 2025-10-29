@@ -1,0 +1,19 @@
+name = "zeta-api"
+main = "src/index.ts"
+compatibility_date = "2024-04-05"
+
+[vars]
+ALLOWED_ORIGIN = "https://frontend.example.com"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "zeta"
+database_id = "00000000-0000-0000-0000-000000000000"
+
+[[r2_buckets]]
+binding = "BUNDLES"
+bucket_name = "zeta-bundles"
+
+[[queues.producers]]
+binding = "VERIFY_QUEUE"
+queue = "verify-evidence"

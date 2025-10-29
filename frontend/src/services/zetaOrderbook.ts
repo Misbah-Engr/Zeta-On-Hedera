@@ -1,223 +1,138 @@
-import { useCallback } from 'react';
-import { useContractActions } from './hedera';
-import { Agent, AgentAd, AgentProfile, Dispute, Order, OrderLifecycleEvent } from '../types/order';
-import { AccountId } from '@hashgraph/sdk';
+import { useCallback } from 'react'
+import { Agent, AgentAd, AgentAvailability, AgentProfile, Dispute, Order, OrderLifecycleEvent } from '../types/order'
+import { fetchAgent, fetchAgentByWallet, fetchAgents, fetchOrderEvents, fetchOrders } from './worker'
 
-const FALLBACK_AGENTS: Agent[] = [
-  {
-    id: '0.0.1001',
-    handle: 'skybridge',
-    avatar: 'https://i.pravatar.cc/150?img=12',
-    baseLocation: 'Singapore',
-    rating: 4.9,
-    completedDeliveries: 182,
-    disputedDeliveries: 2
-  },
-  {
-    id: '0.0.998',
-    handle: 'arcticfox',
-    avatar: 'https://i.pravatar.cc/150?img=32',
-    baseLocation: 'Reykjavík',
-    rating: 4.7,
-    completedDeliveries: 96,
-    disputedDeliveries: 1
+const DEFAULT_AVATAR = 'https://avatars.dicebear.com/api/identicon/zeta.svg'
+
+function toOrder(row: any): Order {
+  return {
+    id: row.id,
+    buyer: row.buyer,
+    agent: row.agent ?? '',
+    commodity: row.commodity,
+    origin: row.origin,
+    destination: row.destination,
+    status: row.status,
+    price: row.price,
+    updatedAt: row.updatedAt
   }
-];
+}
 
-const FALLBACK_ADS: AgentAd[] = [
-  {
-    id: 'ad-1',
-    agentId: '0.0.1001',
-    commodity: 'Lithium cells',
-    location: 'Singapore → Tokyo',
-    price: '1420 USDC',
-    minWeight: 2,
-    maxWeight: 150,
-    availability: 'Available'
-  },
-  {
-    id: 'ad-2',
-    agentId: '0.0.998',
-    commodity: 'Cold-chain biologics',
-    location: 'Reykjavík → Frankfurt',
-    price: '980 USDC',
-    minWeight: 1,
-    maxWeight: 80,
-    availability: 'Queueing'
+function toAgent(adapted: any): Agent {
+  return {
+    id: adapted.id,
+    handle: adapted.legalName || adapted.id,
+    avatar: DEFAULT_AVATAR,
+    baseLocation: adapted.baseLocation || '—',
+    rating: 4.5,
+    completedDeliveries: 0,
+    disputedDeliveries: 0
   }
-];
+}
 
-const FALLBACK_ORDERS: Order[] = [
-  {
-    id: '501',
-    buyer: '0.0.1234',
-    agent: '0.0.1001',
-    commodity: 'Lithium cells',
-    origin: 'Singapore',
-    destination: 'Tokyo',
-    status: 'InTransit',
-    price: '1420 USDC',
-    updatedAt: 1712432923
-  },
-  {
-    id: '502',
-    buyer: '0.0.1234',
-    agent: '0.0.998',
-    commodity: 'Cold-chain biologics',
-    origin: 'Reykjavík',
-    destination: 'Frankfurt',
-    status: 'Delivered',
-    price: '980 USDC',
-    updatedAt: 1711322923
+function toAd(agent: any): AgentAd {
+  const availability: AgentAvailability = agent.status === 'approved' ? 'Available' : agent.status === 'submitted' ? 'Queueing' : 'Unavailable'
+  return {
+    id: `ad-${agent.id}`,
+    agentId: agent.id,
+    commodity: agent.certifications ? `Certified: ${agent.certifications}` : 'General logistics capacity',
+    location: agent.operatingRegions ? `${agent.baseLocation ?? 'Global'} • Regions: ${agent.operatingRegions}` : agent.baseLocation ?? 'Global network',
+    price: agent.feeScheduleCid ? `Fee schedule: ${agent.feeScheduleCid}` : 'Quote on request',
+    minWeight: agent.coldChainCapable ? 1 : 0,
+    maxWeight: agent.coldChainCapable ? 1000 : 250,
+    availability
   }
-];
+}
 
-const FALLBACK_TIMELINE: OrderLifecycleEvent[] = [
-  { status: 'Created', note: 'Escrow funded', at: 1711322923 },
-  { status: 'Matched', note: 'Agent accepted assignment', at: 1711326523 },
-  { status: 'InTransit', note: 'Pickup confirmed', at: 1711412923 },
-  { status: 'Delivered', note: 'Drop-off signature uploaded', at: 1711499323 }
-];
+function toProfile(agent: any): AgentProfile {
+  const baseAgent = toAgent(agent)
+  return {
+    ...baseAgent,
+    handle: agent.legalName,
+    bio: agent.fleetDetails || 'Specialised Hedera-enabled fulfilment agent.',
+    baseLocation: agent.baseLocation || '—'
+  }
+}
 
-const FALLBACK_DISPUTE: Dispute = {
-  stage: 'EvidenceSubmitted',
-  claimant: '0.0.1234',
-  evidence: 'Temperature logs uploaded for verification',
-  resolution: ''
-};
+function toTimeline(events: any[]): OrderLifecycleEvent[] {
+  return events.map((event) => ({
+    status: event.status,
+    note: event.note,
+    at: event.at
+  }))
+}
 
 export const useOrderbookApi = () => {
-  const { readContract } = useContractActions();
-
   const fetchOrdersForAccount = useCallback(async (account: string): Promise<Order[]> => {
+    if (!account) return []
     try {
-      const items = await readContract({
-        functionName: 'getOrdersForAccount',
-        args: [account],
-      }) as Array<any>;
-
-      return items.map((item) => ({
-        id: item.id.toString(),
-        buyer: item.buyer,
-        agent: item.agent,
-        commodity: item.commodity,
-        origin: item.origin,
-        destination: item.destination,
-        status: mapStatus(item.status),
-        price: `${Number(item.price) / 100} USDC`,
-        updatedAt: Number(item.updatedAt)
-      }));
+      const { orders } = await fetchOrders(account)
+      return orders.map(toOrder)
     } catch (error) {
-      console.warn('Falling back to mocked orders', error);
-      return FALLBACK_ORDERS;
+      console.warn('orders_fallback', error)
+      return []
     }
-  }, [readContract]);
+  }, [])
 
   const fetchActiveAds = useCallback(async (): Promise<AgentAd[]> => {
     try {
-      const items = await readContract({
-        functionName: 'getActiveAds',
-      }) as Array<any>;
-
-      return items.map((item, index) => ({
-        id: `${item.agent}-${index}`,
-        agentId: item.agent,
-        commodity: item.commodity,
-        location: item.location,
-        price: `${Number(item.price) / 100} USDC`,
-        minWeight: Number(item.minWeight),
-        maxWeight: Number(item.maxWeight),
-        availability: mapAvailability(item.availability)
-      }));
+      const { agents } = await fetchAgents()
+      return agents.map(toAd)
     } catch (error) {
-      console.warn('Falling back to mocked ads', error);
-      return FALLBACK_ADS;
+      console.warn('ads_fallback', error)
+      return []
     }
-  }, [readContract]);
+  }, [])
 
-  const fetchAgentProfile = useCallback(async (agent: string): Promise<AgentProfile> => {
+  const fetchAgentProfile = useCallback(async (agentId: string): Promise<AgentProfile> => {
     try {
-      const profile = await readContract({
-        functionName: 'getAgentProfile',
-        args: [AccountId.fromString(agent).toSolidityAddress()],
-      }) as any;
-
+      const { agent } = await fetchAgent(agentId)
+      return toProfile(agent)
+    } catch (error) {
+      console.warn('agent_profile_fallback', error)
       return {
-        id: agent,
-        handle: profile.handle,
-        avatar: profile.avatar,
-        bio: profile.bio,
-        baseLocation: profile.baseLocation,
-        rating: Number(profile.rating),
-        completedDeliveries: Number(profile.completedDeliveries),
-        disputedDeliveries: Number(profile.disputedDeliveries)
-      };
-    } catch (error) {
-      console.warn('Falling back to mocked agent profile', error);
-      const fallback = FALLBACK_AGENTS.find((a) => a.id === agent) ?? FALLBACK_AGENTS[0];
-      return { ...fallback, bio: 'Globally trusted logistics orchestrator on Hedera.' };
+        id: agentId,
+        handle: agentId,
+        avatar: DEFAULT_AVATAR,
+        baseLocation: '—',
+        rating: 4.5,
+        completedDeliveries: 0,
+        disputedDeliveries: 0,
+        bio: 'Profile not found'
+      }
     }
-  }, [readContract]);
+  }, [])
 
-  const fetchAgentAds = useCallback(async (agent: string): Promise<AgentAd[]> => {
+  const fetchAgentAds = useCallback(async (agentId: string): Promise<AgentAd[]> => {
     try {
-      const items = await readContract({
-        functionName: 'getAgentAds',
-        args: [AccountId.fromString(agent).toSolidityAddress()],
-      }) as Array<any>;
-
-      return items.map((item, index) => ({
-        id: `${agent}-${index}`,
-        agentId: agent,
-        commodity: item.commodity,
-        location: item.location,
-        price: `${Number(item.price) / 100} USDC`,
-        minWeight: Number(item.minWeight),
-        maxWeight: Number(item.maxWeight),
-        availability: mapAvailability(item.availability)
-      }));
+      const { agent } = await fetchAgent(agentId)
+      if (!agent) return []
+      return [toAd(agent)]
     } catch (error) {
-      console.warn('Falling back to mocked agent ads', error);
-      return FALLBACK_ADS.filter((ad) => ad.agentId === agent);
+      console.warn('agent_ads_fallback', error)
+      return []
     }
-  }, [readContract]);
+  }, [])
 
   const fetchOrderTimeline = useCallback(async (orderId: string): Promise<OrderLifecycleEvent[]> => {
     try {
-      const items = await readContract({
-        functionName: 'getOrderTimeline',
-        args: [BigInt(orderId)],
-      }) as Array<any>;
-
-      return items.map((item) => ({
-        status: mapStatus(item.status),
-        note: item.note,
-        at: Number(item.at)
-      }));
+      const { events } = await fetchOrderEvents(orderId)
+      return toTimeline(events)
     } catch (error) {
-      console.warn('Falling back to mocked timeline', error);
-      return FALLBACK_TIMELINE;
+      console.warn('order_timeline_fallback', error)
+      return []
     }
-  }, [readContract]);
+  }, [])
 
-  const fetchDispute = useCallback(async (orderId: string): Promise<Dispute | undefined> => {
-    try {
-      const dispute = await readContract({
-        functionName: 'getDispute',
-        args: [BigInt(orderId)],
-      }) as any;
+  const fetchDispute = useCallback(async (_orderId: string): Promise<Dispute | undefined> => {
+    return undefined
+  }, [])
 
-      return {
-        stage: mapDisputeStage(dispute.stage),
-        claimant: dispute.claimant,
-        evidence: dispute.evidence,
-        resolution: dispute.resolution
-      };
-    } catch (error) {
-      console.warn('Falling back to mocked dispute', error);
-      return FALLBACK_DISPUTE;
-    }
-  }, [readContract]);
+  const fetchAgentStatusByWallet = useCallback(async (wallet: string) => {
+    if (!wallet) return null
+    const { agent } = await fetchAgentByWallet(wallet)
+    return agent
+  }, [])
 
   return {
     fetchOrdersForAccount,
@@ -225,53 +140,7 @@ export const useOrderbookApi = () => {
     fetchAgentProfile,
     fetchAgentAds,
     fetchOrderTimeline,
-    fetchDispute
-  };
-};
-
-const mapStatus = (status: number): Order['status'] => {
-  switch (status) {
-    case 0:
-      return 'Created';
-    case 1:
-      return 'Matched';
-    case 2:
-      return 'InTransit';
-    case 3:
-      return 'Delivered';
-    case 4:
-      return 'Disputed';
-    case 5:
-      return 'Resolved';
-    default:
-      return 'Created';
+    fetchDispute,
+    fetchAgentStatusByWallet
   }
-};
-
-const mapAvailability = (availability: number): AgentAd['availability'] => {
-  switch (availability) {
-    case 0:
-      return 'Available';
-    case 1:
-      return 'Queueing';
-    case 2:
-      return 'Unavailable';
-    default:
-      return 'Available';
-  }
-};
-
-const mapDisputeStage = (stage: number): Dispute['stage'] => {
-  switch (stage) {
-    case 0:
-      return 'Filed';
-    case 1:
-      return 'EvidenceSubmitted';
-    case 2:
-      return 'MediatorReview';
-    case 3:
-      return 'Resolved';
-    default:
-      return 'Filed';
-  }
-};
+}
