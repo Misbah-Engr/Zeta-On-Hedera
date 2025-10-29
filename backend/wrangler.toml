@@ -3,7 +3,7 @@ main = "src/index.ts"
 compatibility_date = "2024-04-05"
 
 [vars]
-ALLOWED_ORIGIN = "https://frontend.example.com"
+ALLOWED_ORIGIN = "https://zetahash.xyz"
 
 [[d1_databases]]
 binding = "DB"
