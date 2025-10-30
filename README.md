@@ -131,6 +131,7 @@ https://www.canva.com/design/DAG3J4AXHxs/tgSypndkz7lW7KQ7EkSsiA/edit?utm_content
 If you want to compile and test the smart contracts, use hardhat,
 
 ```
+npm install
 npx hardhat compile
 npx hardhat test
 ```
