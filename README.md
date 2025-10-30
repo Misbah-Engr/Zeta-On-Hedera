@@ -121,3 +121,33 @@ VITE_DEFAULT_MICROBOND_BPS=500
 VITE_CLAIM_WINDOW_HOURS=72
 VITE_ACK_WINDOW_HOURS=2
 ```
+
+## Pitch Deck
+
+https://www.canva.com/design/DAG3J4AXHxs/tgSypndkz7lW7KQ7EkSsiA/edit?utm_content=DAG3J4AXHxs&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
+## Set up
+
+If you want to compile and test the smart contracts, use hardhat,
+
+```
+npx hardhat compile
+npx hardhat test
+```
+
+Or use Foundry,
+
+```
+forget build
+forge test
+```
+
+For the frontend,
+
+```
+cd frontend
+npm install
+npm run dev
+```
+
+Backend is still in progress.
