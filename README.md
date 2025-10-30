@@ -102,8 +102,8 @@ The following environment variables are required for the frontend application:
 
 ```bash
 VITE_APP_NAME=Zeta
-VITE_ORIGIN=https://app.zeta.global
-VITE_RP_ID=app.zeta.global
+VITE_ORIGIN=https://wwww.zetahash.xyz
+VITE_RP_ID=/wwww.zetahash.xyz
 
 VITE_HEDERA_NETWORK=testnet
 VITE_RPC_URL=https://testnet.hashio.io/api
