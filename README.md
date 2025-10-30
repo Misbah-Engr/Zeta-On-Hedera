@@ -56,6 +56,7 @@ The Zeta protocol is composed of five core smart contracts that work together to
 
 ## Verified Implementation Contracts
 
+```bash
 0x23319d59e36C4463967b0aD4be5F5b99403D6f97 
 ZetaPolicy
 
@@ -70,6 +71,7 @@ ZetaDisputes
 
 0xac4aE8d8C422001f1b961A5CcAf3e4614451ceC8
 ZetaOrderBook
+```
 
 ## Tech Stack
 
@@ -85,7 +87,7 @@ ZetaOrderBook
 
 The `frontend/` directory hosts a minimal Zeta control surface that connects to the deployed Hedera suite via HashPack.
 
-```
+```bash
 cd frontend
 cp .env.example .env   # adjust addresses or network if required
 npm install
@@ -98,7 +100,7 @@ The console automatically groups every ABI function for `ZetaPolicy`, `ZetaAgent
 
 The following environment variables are required for the frontend application:
 
-```
+```bash
 VITE_APP_NAME=Zeta
 VITE_ORIGIN=https://app.zeta.global
 VITE_RP_ID=app.zeta.global
@@ -130,7 +132,7 @@ https://www.canva.com/design/DAG3J4AXHxs/tgSypndkz7lW7KQ7EkSsiA/edit?utm_content
 
 If you want to compile and test the smart contracts, use hardhat,
 
-```
+```bash
 npm install
 npx hardhat compile
 npx hardhat test
@@ -138,8 +140,9 @@ npx hardhat test
 
 Or use Foundry,
 
-```
-forget build
+```bash
+npm install
+forge build
 forge test
 ```
 
